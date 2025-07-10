@@ -172,7 +172,8 @@ driver.quit()
 
 # STEP 3. Google Sheets 업로드
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("project2-465201-e2afcd853cd9.json", scope)
+creds = ServiceAccountCredentials.from_json_keyfile_name("service_account.json", scope)
+
 client = gspread.authorize(creds)
 
 sheet = client.open("최종입법데이터").worksheet("입법부")
