@@ -170,10 +170,15 @@ finally:
     try:
         sheet = connect_to_google_sheet('최종입법데이터', '행정부')
         sheet.clear()
-        sheet.append_row(["메일제목", "수집일", "제목", "소관위", "게시종료일", "주요내용", "링크", "요약본", "기대효과"])
+        sheet.append_row([
+            "메일제목", "수집일", "제목", "소관위", "게시종료일",
+            "주요내용", "링크", "요약본", "기대효과", "인덱스"
+        ])
 
         if results:
-            sheet.append_rows([r + ["", ""] for r in results])
+            for idx, row in enumerate(results, start=1):
+                row.extend(["", "", idx])  # 요약본, 기대효과, 인덱스
+            sheet.append_rows(results)
             print(f"✅ 구글시트 저장 완료: 총 {len(results)}건 업로드됨")
         else:
             print("📂 저장할 데이터가 없습니다.")
@@ -182,4 +187,5 @@ finally:
         print("❌ 구글시트 저장 실패:", e)
 
     driver.quit()
+
 
