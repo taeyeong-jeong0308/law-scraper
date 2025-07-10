@@ -172,12 +172,12 @@ finally:
         sheet.clear()
         sheet.append_row([
             "메일제목", "수집일", "제목", "소관위", "게시종료일",
-            "주요내용", "링크", "요약본", "기대효과", "인덱스"
+            "주요내용", "링크", "요약본", "기대효과", "게시글", "인덱스","제목카드","내용카드","메일카드"
         ])
 
         if results:
             for idx, row in enumerate(results, start=1):
-                row.extend(["", "", idx])  # 요약본, 기대효과, 인덱스
+                row.extend(["", "", "", idx, "", "", ""])  # "요약본", "기대효과", "게시글", "인덱스","제목카드","내용카드","메일카드"
             sheet.append_rows(results)
             print(f"✅ 구글시트 저장 완료: 총 {len(results)}건 업로드됨")
         else:
