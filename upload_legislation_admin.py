@@ -32,8 +32,8 @@ def connect_to_google_sheet(sheet_name, worksheet_name):
         "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/drive"
     ]
-    creds = ServiceAccountCredentials.from_json_keyfile_name(
-        r"C:\\Users\\bitcamp\\OneDrive\\Desktop\\pythontraning\\project2\\project2-465201-e2afcd853cd9.json", scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name("service_account.json", scope)
+
     client = gspread.authorize(creds)
     return client.open(sheet_name).worksheet(worksheet_name)
 
