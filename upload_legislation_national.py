@@ -186,6 +186,9 @@ if len(existing_rows) > 0:
     sheet.resize(rows=1)
     print(f"🧹 기존 데이터 {len(existing_rows)}건 전체 삭제 완료 ✅")
 
+# 새로운 헤더에 '인덱스' 추가
+sheet.update('A1', [["메일제목", "수집일", "의안번호", "제목", "제안자", "소관위", "링크", "게시종료일", "내용요약", "요약본", "기대효과", "인덱스"]])
+
 rows_to_append = []
 
 # API 기반 데이터 업로드
@@ -196,7 +199,8 @@ for bill_no, info in api_data.items():
         bill_no,
         info["제목"], info["제안자"], info["소관위"],
         info["링크"], info["게시종료일"],
-        info.get("내용요약", "(내용 없음)"), "", ""
+        info.get("내용요약", "(내용 없음)"), "", "",
+        len(rows_to_append) + 1  # 인덱스 추가
     ]
     rows_to_append.append(row)
 
@@ -207,7 +211,8 @@ for row in combined_rows:
         yesterday_str_kor,
         row["의안번호"],
         row["제목"], row["제안자"], row["소관위"],
-        row["링크"], row["게시종료일"], row["내용요약"], "", ""
+        row["링크"], row["게시종료일"], row["내용요약"], "", "",
+        len(rows_to_append) + 1  # 인덱스 추가
     ]
     rows_to_append.append(row)
 
@@ -217,6 +222,3 @@ if rows_to_append:
     print(f"📤 Google Sheet 신규 업로드 완료: 총 {len(rows_to_append)}건 ✅")
 else:
     print("📂 추가할 신규 데이터가 없습니다.")
-
-
-# 입법부
