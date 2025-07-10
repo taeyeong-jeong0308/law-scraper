@@ -187,7 +187,8 @@ if len(existing_rows) > 0:
     print(f"🧹 기존 데이터 {len(existing_rows)}건 전체 삭제 완료 ✅")
 
 # 새로운 헤더에 '인덱스' 추가
-sheet.update('A1', [["메일제목", "수집일", "의안번호", "제목", "제안자", "소관위", "링크", "게시종료일", "내용요약", "요약본", "기대효과", "인덱스"]])
+sheet.update('A1', [["메일제목", "수집일", "의안번호", "제목", "제안자", "소관위", "링크", "게시종료일", "내용요약", "요약본", "기대효과", "게시글", 
+                     "인덱스", "제목카드", "내용카드", "메일카드"]])
 
 rows_to_append = []
 
@@ -199,8 +200,8 @@ for bill_no, info in api_data.items():
         bill_no,
         info["제목"], info["제안자"], info["소관위"],
         info["링크"], info["게시종료일"],
-        info.get("내용요약", "(내용 없음)"), "", "",
-        len(rows_to_append) + 1  # 인덱스 추가
+        info.get("내용요약", "(내용 없음)"), "", "", "",
+        len(rows_to_append) + 1, "", "", ""  # 인덱스 추가
     ]
     rows_to_append.append(row)
 
