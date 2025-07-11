@@ -57,22 +57,22 @@ while True:
 options = webdriver.ChromeOptions()
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
-options.add_argument('--headless')  # ✅ 추가
-options.add_argument('--disable-gpu')  # ✅ 추가
-options.add_argument('--disable-extensions')  # ✅ 추가
-options.add_argument('--disable-infobars')  # ✅ 추가
+options.add_argument('--headless')
+options.add_argument('--disable-gpu')
+options.add_argument('--disable-extensions')
+options.add_argument('--disable-infobars')
+
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 wait = WebDriverWait(driver, 10)
 
 list_url = "https://pal.assembly.go.kr/napal/lgsltpa/lgsltpaOngoing/list.do?searchConClosed=0&menuNo=1100026"
 driver.get(list_url)
 
-max_pages = 11
 current_page = 1
 combined_rows = []
 
 try:
-    while current_page <= max_pages:
+    while True:
         print(f"\n📄 [페이지 {current_page}] =============================")
         wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR,
             "#frm > div > div.board01.pr.td_center.board-added > table > tbody > tr"
@@ -81,6 +81,10 @@ try:
         links = driver.find_elements(By.CSS_SELECTOR,
             "#frm > div > div.board01.pr.td_center.board-added > table > tbody > tr > td.align_left.td_block > a"
         )
+
+        if not links:
+            print("🛑 더 이상 페이지에 데이터 없음 → 종료")
+            break
 
         for i in range(len(links)):
             links = driver.find_elements(By.CSS_SELECTOR,
@@ -161,17 +165,18 @@ try:
             time.sleep(2)
 
         current_page += 1
-        if current_page <= max_pages:
-            try:
-                driver.execute_script("fnSearch(arguments[0])", current_page)
-                time.sleep(2)
-            except Exception as e:
-                print(f"❌ 페이지 {current_page} 이동 실패: {e}")
-                break
+        try:
+            driver.execute_script("fnSearch(arguments[0])", current_page)
+            time.sleep(2)
+        except Exception as e:
+            print(f"❌ 페이지 {current_page} 이동 실패 → 종료: {e}")
+            break
 
 except Exception as e:
     print(f"❌ 전체 오류: {e}")
-driver.quit()
+finally:
+    driver.quit()
+
 
 # STEP 3. Google Sheets 업로드
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
