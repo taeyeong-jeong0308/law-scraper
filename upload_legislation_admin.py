@@ -1,3 +1,6 @@
+import re
+from datetime import datetime, timedelta
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -7,8 +10,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from oauth2client.service_account import ServiceAccountCredentials
 import gspread
 import time
-import re
-from datetime import datetime, timedelta
 
 # 📌 날짜 기준 (어제)
 today = datetime.today()
@@ -25,17 +26,20 @@ mail_subject_date = f"[{today_str_mmdd}] {yesterday_dash} 입법예고 입법다
 # 오늘 날짜 객체 (종료일 비교용)
 today_date = today.date()
 
+
 # 📌 Google Sheets 연동 함수
 def connect_to_google_sheet(sheet_name, worksheet_name):
     scope = [
         "https://spreadsheets.google.com/feeds",
         "https://www.googleapis.com/auth/spreadsheets",
-        "https://www.googleapis.com/auth/drive"
+        "https://www.googleapis.com/auth/drive",
     ]
-    creds = ServiceAccountCredentials.from_json_keyfile_name("service_account.json", scope)
-
+    creds = ServiceAccountCredentials.from_json_keyfile_name(
+        "service_account.json", scope
+    )
     client = gspread.authorize(creds)
     return client.open(sheet_name).worksheet(worksheet_name)
+
 
 # 📌 의견제출 이전까지 내용만 추출
 def extract_until_opinion(text):
@@ -45,11 +49,19 @@ def extract_until_opinion(text):
             return text.split(key)[0].strip()
     return text.strip()
 
+
 # 📌 브라우저 설정
 options = webdriver.ChromeOptions()
-options.add_argument('--no-sandbox')
-options.add_argument('--disable-dev-shm-usage')
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--headless")  # ✅ GitHub Actions에서는 headless 필수
+options.add_argument("--disable-gpu")
+options.add_argument("--disable-extensions")
+options.add_argument("--disable-infobars")
+
+driver = webdriver.Chrome(
+    service=Service(ChromeDriverManager().install()), options=options
+)
 wait = WebDriverWait(driver, 10)
 
 results = []
@@ -62,12 +74,22 @@ try:
     while True:
         print(f"\n📄 [페이지 {page_number}]")
         time.sleep(2)
-        wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#listView > ul")))
-        link_elements = driver.find_elements(By.CSS_SELECTOR, "#listView > ul > li.title.W40 > a")
+        wait.until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#listView > ul"))
+        )
+        link_elements = driver.find_elements(
+            By.CSS_SELECTOR, "#listView > ul > li.title.W40 > a"
+        )
 
         for i in range(len(link_elements)):
-            wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#listView > ul")))
-            link_elements = driver.find_elements(By.CSS_SELECTOR, "#listView > ul > li.title.W40 > a")
+            wait.until(
+                EC.presence_of_all_elements_located(
+                    (By.CSS_SELECTOR, "#listView > ul")
+                )
+            )
+            link_elements = driver.find_elements(
+                By.CSS_SELECTOR, "#listView > ul > li.title.W40 > a"
+            )
             if i >= len(link_elements):
                 break
 
@@ -85,25 +107,39 @@ try:
             wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#ogLmPpVo")))
 
             try:
-                title = driver.find_element(By.CSS_SELECTOR, "#ogLmPpVo > div:nth-child(7) > div > p:nth-child(8) > span").text.strip()
+                title = driver.find_element(
+                    By.CSS_SELECTOR,
+                    "#ogLmPpVo > div:nth-child(7) > div > p:nth-child(8) > span",
+                ).text.strip()
             except:
                 title = "제목 없음"
 
             try:
-                committee_raw = driver.find_element(By.CSS_SELECTOR, "#ogLmPpVo > ul.basic > li:nth-child(2) > table > tbody > tr > td").text.strip()
+                committee_raw = driver.find_element(
+                    By.CSS_SELECTOR,
+                    "#ogLmPpVo > ul.basic > li:nth-child(2) > table > tbody > tr > td",
+                ).text.strip()
                 committee = committee_raw.split("전화번호")[0].strip()
             except:
                 committee = "소관위 없음"
 
             try:
-                period_raw = driver.find_element(By.CSS_SELECTOR, "#ogLmPpVo > ul.basic > li:nth-child(1)").text.strip()
+                period_raw = driver.find_element(
+                    By.CSS_SELECTOR, "#ogLmPpVo > ul.basic > li:nth-child(1)"
+                ).text.strip()
                 match = re.search(
                     r"(\d{4})[.\- ]\s*(\d{1,2})[.\- ]\s*(\d{1,2})[.]?\s*~\s*(\d{4})[.\- ]\s*(\d{1,2})[.\- ]\s*(\d{1,2})",
-                    period_raw
+                    period_raw,
                 )
                 if match:
-                    start_date = datetime.strptime(f"{match.group(1)}-{int(match.group(2)):02d}-{int(match.group(3)):02d}", "%Y-%m-%d").date()
-                    end_date = datetime.strptime(f"{match.group(4)}-{int(match.group(5)):02d}-{int(match.group(6)):02d}", "%Y-%m-%d").date()
+                    start_date = datetime.strptime(
+                        f"{match.group(1)}-{int(match.group(2)):02d}-{int(match.group(3)):02d}",
+                        "%Y-%m-%d",
+                    ).date()
+                    end_date = datetime.strptime(
+                        f"{match.group(4)}-{int(match.group(5)):02d}-{int(match.group(6)):02d}",
+                        "%Y-%m-%d",
+                    ).date()
                 else:
                     print(f"❗ 날짜 추출 실패 → period_raw: {period_raw}")
                     start_date, end_date = None, None
@@ -124,13 +160,17 @@ try:
                 continue
 
             try:
-                content_raw = driver.find_element(By.CSS_SELECTOR, "#ogLmPpVo > div:nth-child(7) > div").text.strip()
+                content_raw = driver.find_element(
+                    By.CSS_SELECTOR, "#ogLmPpVo > div:nth-child(7) > div"
+                ).text.strip()
                 content = extract_until_opinion(content_raw)
             except:
                 content = "내용 없음"
 
             try:
-                link_element = driver.find_element(By.CSS_SELECTOR, "#ogLmPpVo > ul:nth-child(2) > a:nth-child(2)")
+                link_element = driver.find_element(
+                    By.CSS_SELECTOR, "#ogLmPpVo > ul:nth-child(2) > a:nth-child(2)"
+                )
                 link_url = link_element.get_attribute("href").strip()
             except:
                 link_url = "링크 없음"
@@ -143,7 +183,17 @@ try:
             print("📝 내용 요약:", content)
             print("🔗 링크:", link_url)
 
-            results.append([mail_subject_date, yesterday_str_kor, title, committee, end_date.strftime("%Y-%m-%d"), content, link_url])
+            results.append(
+                [
+                    mail_subject_date,
+                    yesterday_str_kor,
+                    title,
+                    committee,
+                    end_date.strftime("%Y-%m-%d"),
+                    content,
+                    link_url,
+                ]
+            )
             driver.back()
             time.sleep(2)
 
@@ -168,16 +218,30 @@ try:
 finally:
     print("\n📤 구글시트 저장 중...")
     try:
-        sheet = connect_to_google_sheet('최종입법데이터', '행정부')
+        sheet = connect_to_google_sheet("화면꺼짐자동화_절대로_건들지말것", "행정부")
         sheet.clear()
-        sheet.append_row([
-            "메일제목", "수집일", "제목", "소관위", "게시종료일",
-            "주요내용", "링크", "요약본", "기대효과", "게시글", "인덱스", "제목카드", "내용카드", "메일카드"
-        ])
+        sheet.append_row(
+            [
+                "메일제목",
+                "수집일",
+                "제목",
+                "소관위",
+                "게시종료일",
+                "주요내용",
+                "링크",
+                "요약본",
+                "기대효과",
+                "게시글",
+                "인덱스",
+                "제목카드",
+                "내용카드",
+                "메일카드",
+            ]
+        )
 
         if results:
             for idx, row in enumerate(results, start=1):
-                row.extend(["", "", "", idx, "", "", ""])  # "요약본", "기대효과", "게시글", "인덱스","제목카드","내용카드","메일카드"
+                row.extend(["", "", "", idx, "", "", ""])
             sheet.append_rows(results)
             print(f"✅ 구글시트 저장 완료: 총 {len(results)}건 업로드됨")
         else:
@@ -187,5 +251,6 @@ finally:
         print("❌ 구글시트 저장 실패:", e)
 
     driver.quit()
+
 
 
