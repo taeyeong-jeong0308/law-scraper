@@ -57,7 +57,10 @@ while True:
 options = webdriver.ChromeOptions()
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
-options.add_argument('--start-maximized')
+options.add_argument('--headless')  # ✅ 추가
+options.add_argument('--disable-gpu')  # ✅ 추가
+options.add_argument('--disable-extensions')  # ✅ 추가
+options.add_argument('--disable-infobars')  # ✅ 추가
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 wait = WebDriverWait(driver, 10)
 
@@ -176,7 +179,7 @@ creds = ServiceAccountCredentials.from_json_keyfile_name("service_account.json",
 
 client = gspread.authorize(creds)
 
-sheet = client.open("최종입법데이터").worksheet("입법부")
+sheet = client.open("화면꺼짐자동화_절대로_건들지말것").worksheet("입법부")
 existing_data = sheet.get_all_values()
 header = existing_data[0]
 existing_rows = existing_data[1:]
