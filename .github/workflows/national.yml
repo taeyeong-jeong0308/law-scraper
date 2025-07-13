@@ -2,7 +2,7 @@ name: Run upload_legislation_national.py daily
 
 on:
   schedule:
-    - cron: '0 7 * * *'  # 매일 오후 4:00 (KST 기준, UTC 07:00)
+    - cron: '0 14 * * *'  # 매일 오후 11:00 (KST 기준, UTC 14:00)
   workflow_dispatch:
 
 jobs:
@@ -23,9 +23,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Create service account key file
+      - name: Decode base64 secret and create service_account.json
         run: |
-          echo "${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}" > service_account.json
+          echo "${{ secrets.GOOGLE_API_KEY }}" | base64 -d > service_account.json
 
       - name: Run script
         env:
