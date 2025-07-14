@@ -218,7 +218,7 @@ try:
 finally:
     print("\n📤 구글시트 저장 중...")
     try:
-        sheet = connect_to_google_sheet("화면꺼짐자동화_절대로_건들지말것", "행정부")
+        sheet = connect_to_google_sheet("최종입법데이터", "행정부")
         sheet.clear()
         sheet.append_row(
             [
