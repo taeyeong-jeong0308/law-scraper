@@ -1,9 +1,9 @@
 name: Run upload_legislation_admin.py daily
 
-on:
-  schedule:
-    - cron: '0 22 * * *'  # 매일 오전 7:00 KST (UTC 기준 22:00)
-  workflow_dispatch:
+# on:
+#   schedule:
+#     - cron: '0 22 * * *'  # 매일 오전 7:00 KST (UTC 기준 22:00)
+#   workflow_dispatch:
 
 jobs:
   run-script:
