@@ -1,0 +1,1217 @@
+{
+    "name": "1.2.3 행정부 카드1.2.3 행정부 카드",
+    "flow": [
+        {
+            "id": 1,
+            "module": "google-sheets:watchRows",
+            "version": 2,
+            "parameters": {
+                "from": "share",
+                "mode": "select",
+                "limit": 20,
+                "sheetId": "행정부",
+                "__IMTCONN__": 4265114,
+                "spreadsheetId": "/1VSARrzbLzJbf-oIzSmYaNlUXfVarCRaC/1zQ8WmiaTzKSjBS87oeySXeTOHLPYlJTD/1rGMH025Kt0h3arGvigKx4bfaP6AzNQRxdm8Ku6wfKnQ",
+                "tableFirstRow": "A1:Z1",
+                "includesHeaders": true,
+                "valueRenderOption": "FORMATTED_VALUE",
+                "dateTimeRenderOption": "FORMATTED_STRING"
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": -837,
+                    "y": -16
+                },
+                "restore": {
+                    "parameters": {
+                        "from": {
+                            "label": "Shared with me"
+                        },
+                        "mode": {
+                            "label": "Search by path"
+                        },
+                        "sheetId": {
+                            "label": "행정부"
+                        },
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google"
+                            },
+                            "label": "My Google connection (oheth9@gmail.com)"
+                        },
+                        "spreadsheetId": {
+                            "path": [
+                                "ESG2TEAM",
+                                "2-2차",
+                                "최종입법데이터"
+                            ]
+                        },
+                        "includesHeaders": {
+                            "label": "Yes"
+                        },
+                        "valueRenderOption": {
+                            "mode": "chose",
+                            "label": "Formatted value"
+                        },
+                        "dateTimeRenderOption": {
+                            "mode": "chose",
+                            "label": "Formatted string"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:google",
+                        "label": "Connection",
+                        "required": true
+                    },
+                    {
+                        "name": "mode",
+                        "type": "select",
+                        "label": "Search Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "select",
+                                "fromAll",
+                                "map"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "includesHeaders",
+                        "type": "select",
+                        "label": "Table contains headers",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                true,
+                                false
+                            ]
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "type": "uinteger",
+                        "label": "Limit",
+                        "required": true
+                    },
+                    {
+                        "name": "valueRenderOption",
+                        "type": "select",
+                        "label": "Value render option",
+                        "validate": {
+                            "enum": [
+                                "FORMATTED_VALUE",
+                                "UNFORMATTED_VALUE",
+                                "FORMULA"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "dateTimeRenderOption",
+                        "type": "select",
+                        "label": "Date and time render option",
+                        "validate": {
+                            "enum": [
+                                "SERIAL_NUMBER",
+                                "FORMATTED_STRING"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "type": "select",
+                        "label": "Drive",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "drive",
+                                "share",
+                                "team"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "spreadsheetId",
+                        "type": "file",
+                        "label": "Spreadsheet ID",
+                        "required": true
+                    },
+                    {
+                        "name": "sheetId",
+                        "type": "select",
+                        "label": "Sheet Name",
+                        "required": true
+                    },
+                    {
+                        "name": "tableFirstRow",
+                        "type": "text",
+                        "label": "Row with headers",
+                        "required": true
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "__ROW_NUMBER__",
+                        "type": "number",
+                        "label": "Row number"
+                    },
+                    {
+                        "name": "__SPREADSHEET_ID__",
+                        "type": "text",
+                        "label": "Spreadsheet ID"
+                    },
+                    {
+                        "name": "__SHEET__",
+                        "type": "text",
+                        "label": "Sheet"
+                    },
+                    {
+                        "name": "0",
+                        "type": "text",
+                        "label": "메일제목 (A)"
+                    },
+                    {
+                        "name": "1",
+                        "type": "text",
+                        "label": "수집일 (B)"
+                    },
+                    {
+                        "name": "2",
+                        "type": "text",
+                        "label": "제목 (C)"
+                    },
+                    {
+                        "name": "3",
+                        "type": "text",
+                        "label": "소관위 (D)"
+                    },
+                    {
+                        "name": "4",
+                        "type": "text",
+                        "label": "게시종료일 (E)"
+                    },
+                    {
+                        "name": "5",
+                        "type": "text",
+                        "label": "주요내용 (F)"
+                    },
+                    {
+                        "name": "6",
+                        "type": "text",
+                        "label": "링크 (G)"
+                    },
+                    {
+                        "name": "7",
+                        "type": "text",
+                        "label": "요약본 (H)"
+                    },
+                    {
+                        "name": "8",
+                        "type": "text",
+                        "label": "기대효과 (I)"
+                    },
+                    {
+                        "name": "9",
+                        "type": "text",
+                        "label": "게시글 (J)"
+                    },
+                    {
+                        "name": "10",
+                        "type": "text",
+                        "label": "인덱스 (K)"
+                    },
+                    {
+                        "name": "11",
+                        "type": "text",
+                        "label": "제목카드 (L)"
+                    },
+                    {
+                        "name": "12",
+                        "type": "text",
+                        "label": "내용카드 (M)"
+                    },
+                    {
+                        "name": "13",
+                        "type": "text",
+                        "label": "메일카드 (N)"
+                    },
+                    {
+                        "name": "14",
+                        "type": "text",
+                        "label": "(O)"
+                    },
+                    {
+                        "name": "15",
+                        "type": "text",
+                        "label": "(P)"
+                    },
+                    {
+                        "name": "16",
+                        "type": "text",
+                        "label": "(Q)"
+                    },
+                    {
+                        "name": "17",
+                        "type": "text",
+                        "label": "(R)"
+                    },
+                    {
+                        "name": "18",
+                        "type": "text",
+                        "label": "(S)"
+                    },
+                    {
+                        "name": "19",
+                        "type": "text",
+                        "label": "(T)"
+                    },
+                    {
+                        "name": "20",
+                        "type": "text",
+                        "label": "(U)"
+                    },
+                    {
+                        "name": "21",
+                        "type": "text",
+                        "label": "(V)"
+                    },
+                    {
+                        "name": "22",
+                        "type": "text",
+                        "label": "(W)"
+                    },
+                    {
+                        "name": "23",
+                        "type": "text",
+                        "label": "(X)"
+                    },
+                    {
+                        "name": "24",
+                        "type": "text",
+                        "label": "(Y)"
+                    },
+                    {
+                        "name": "25",
+                        "type": "text",
+                        "label": "(Z)"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "module": "google-slides:createASlideFromATemplate",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 4265114
+            },
+            "mapper": {
+                "select": "value",
+                "requests": {
+                    "제목": "{{1.`2`}}",
+                    "소관위": "{{1.`3`}}",
+                    "인덱스": "{{1.`10`}}",
+                    "기대효과": "{{1.`8`}}",
+                    "내용요약": "{{1.`7`}}",
+                    "게시종료일": "{{1.`4`}}"
+                },
+                "pageObject": "g36e505a2801_0_36",
+                "destination": "share",
+                "presentation": "/1VSARrzbLzJbf-oIzSmYaNlUXfVarCRaC/1zQ8WmiaTzKSjBS87oeySXeTOHLPYlJTD/1exfa-NQsRfkNOU720RG5kU71i-XPYD7m/1_ucZKLhbUj4YsuBjnwSl3JCv15BHGrV5_fFmTgNk_mE"
+            },
+            "metadata": {
+                "designer": {
+                    "x": -537,
+                    "y": -16
+                },
+                "restore": {
+                    "expect": {
+                        "select": {
+                            "label": "By Dropdown"
+                        },
+                        "pageObject": {
+                            "label": "Template Slide No.2 in page 2",
+                            "nested": [
+                                {
+                                    "name": "requests",
+                                    "spec": [
+                                        {
+                                            "name": "소관위",
+                                            "type": "text",
+                                            "label": "소관위"
+                                        },
+                                        {
+                                            "name": "제목",
+                                            "type": "text",
+                                            "label": "제목"
+                                        },
+                                        {
+                                            "name": "인덱스",
+                                            "type": "text",
+                                            "label": "인덱스"
+                                        },
+                                        {
+                                            "name": "기대효과",
+                                            "type": "text",
+                                            "label": "기대효과"
+                                        },
+                                        {
+                                            "name": "내용요약",
+                                            "type": "text",
+                                            "label": "내용요약"
+                                        },
+                                        {
+                                            "name": "게시종료일",
+                                            "type": "text",
+                                            "label": "게시종료일"
+                                        }
+                                    ],
+                                    "type": "collection",
+                                    "label": "Values"
+                                }
+                            ]
+                        },
+                        "destination": {
+                            "label": "Shared With Me"
+                        },
+                        "presentation": {
+                            "path": [
+                                "ESG2TEAM",
+                                "2-2차",
+                                "템플릿",
+                                "I텍스트템플릿의 사본"
+                            ]
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google"
+                            },
+                            "label": "My Google connection (oheth9@gmail.com)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:google",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "select",
+                        "type": "select",
+                        "label": "Create a Slide from a Template Slide",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "map",
+                                "value"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "pageIndex",
+                        "type": "uinteger",
+                        "label": "Slide Index Page Number"
+                    },
+                    {
+                        "name": "destination",
+                        "type": "select",
+                        "label": "Choose a Drive",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "drive",
+                                "share",
+                                "team"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "presentation",
+                        "type": "file",
+                        "label": "Presentation ID",
+                        "required": true
+                    },
+                    {
+                        "name": "pageObject",
+                        "type": "select",
+                        "label": "Template Slide ID (Page Object ID)",
+                        "required": true
+                    },
+                    {
+                        "name": "requests",
+                        "spec": [
+                            {
+                                "name": "소관위",
+                                "type": "text"
+                            },
+                            {
+                                "name": "제목",
+                                "type": "text"
+                            },
+                            {
+                                "name": "인덱스",
+                                "type": "text"
+                            },
+                            {
+                                "name": "기대효과",
+                                "type": "text"
+                            },
+                            {
+                                "name": "내용요약",
+                                "type": "text"
+                            },
+                            {
+                                "name": "게시종료일",
+                                "type": "text"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Values"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "module": "google-slides:getPage",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 4265114
+            },
+            "mapper": {
+                "choose": "map",
+                "select": true,
+                "pageObject": "{{2.objectId}}",
+                "presentation": "{{2.presentationId}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": -237,
+                    "y": -16
+                },
+                "restore": {
+                    "expect": {
+                        "choose": {
+                            "label": "Enter manually"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google"
+                            },
+                            "label": "My Google connection (oheth9@gmail.com)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:google",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "choose",
+                        "type": "select",
+                        "label": "Enter a Presentation and Page ID",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "map",
+                                "list"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "presentation",
+                        "type": "text",
+                        "label": "Presentation ID",
+                        "required": true
+                    },
+                    {
+                        "name": "pageObject",
+                        "type": "text",
+                        "label": "Page Object ID",
+                        "required": true
+                    },
+                    {
+                        "name": "select",
+                        "type": "boolean",
+                        "label": "Show Page Thumbnail",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 4,
+            "module": "cloudinary:UploadResource",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 4305851
+            },
+            "mapper": {
+                "file": "{{3.contentUrl}}",
+                "type": "upload",
+                "folder": "slides_thumbnails",
+                "file_type": "url",
+                "resourceType": "image",
+                "use_filename": true,
+                "upload_preset": "slides_upload",
+                "unique_filename": true
+            },
+            "metadata": {
+                "designer": {
+                    "x": 83,
+                    "y": -21
+                },
+                "restore": {
+                    "expect": {
+                        "type": {
+                            "mode": "chose",
+                            "label": "Upload"
+                        },
+                        "folder": {
+                            "mode": "chose",
+                            "label": "slides_thumbnails"
+                        },
+                        "file_type": {
+                            "label": "URL Where The File Stored"
+                        },
+                        "resourceType": {
+                            "mode": "chose",
+                            "label": "image"
+                        },
+                        "use_filename": {
+                            "mode": "chose"
+                        },
+                        "upload_preset": {
+                            "mode": "chose",
+                            "label": "slides_upload"
+                        },
+                        "unique_filename": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "cloudinary"
+                            },
+                            "label": "202PJ (didgsfgfi)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:cloudinary",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "file_type",
+                        "type": "select",
+                        "label": "File Type",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "data",
+                                "url"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "resourceType",
+                        "type": "select",
+                        "label": "Resource Type",
+                        "required": true
+                    },
+                    {
+                        "name": "upload_preset",
+                        "type": "select",
+                        "label": "Upload Preset"
+                    },
+                    {
+                        "name": "public_id",
+                        "type": "text",
+                        "label": "Public ID"
+                    },
+                    {
+                        "name": "folder",
+                        "type": "select",
+                        "label": "Folder"
+                    },
+                    {
+                        "name": "use_filename",
+                        "type": "boolean",
+                        "label": "Use Filename"
+                    },
+                    {
+                        "name": "type",
+                        "type": "select",
+                        "label": "Type",
+                        "validate": {
+                            "enum": [
+                                "private",
+                                "upload",
+                                "authenticated"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "file",
+                        "type": "url",
+                        "label": "File",
+                        "required": true
+                    },
+                    {
+                        "name": "unique_filename",
+                        "type": "boolean",
+                        "label": "Unique Filename"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 5,
+            "module": "google-sheets:updateRow",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": 4265114
+            },
+            "mapper": {
+                "from": "share",
+                "mode": "select",
+                "values": {
+                    "12": "{{4.secure_url}}"
+                },
+                "sheetId": "행정부",
+                "rowNumber": "{{1.`__ROW_NUMBER__`}}",
+                "spreadsheetId": "/1VSARrzbLzJbf-oIzSmYaNlUXfVarCRaC/1zQ8WmiaTzKSjBS87oeySXeTOHLPYlJTD/1rGMH025Kt0h3arGvigKx4bfaP6AzNQRxdm8Ku6wfKnQ",
+                "includesHeaders": true,
+                "valueInputOption": "USER_ENTERED"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 415,
+                    "y": -29
+                },
+                "restore": {
+                    "expect": {
+                        "from": {
+                            "label": "Shared with me"
+                        },
+                        "mode": {
+                            "label": "Search by path"
+                        },
+                        "sheetId": {
+                            "label": "행정부"
+                        },
+                        "spreadsheetId": {
+                            "path": [
+                                "ESG2TEAM",
+                                "2-2차",
+                                "최종입법데이터"
+                            ]
+                        },
+                        "includesHeaders": {
+                            "label": "Yes",
+                            "nested": [
+                                {
+                                    "name": "values",
+                                    "spec": [
+                                        {
+                                            "name": "0",
+                                            "type": "text",
+                                            "label": "메일제목 (A)"
+                                        },
+                                        {
+                                            "name": "1",
+                                            "type": "text",
+                                            "label": "수집일 (B)"
+                                        },
+                                        {
+                                            "name": "2",
+                                            "type": "text",
+                                            "label": "제목 (C)"
+                                        },
+                                        {
+                                            "name": "3",
+                                            "type": "text",
+                                            "label": "소관위 (D)"
+                                        },
+                                        {
+                                            "name": "4",
+                                            "type": "text",
+                                            "label": "게시종료일 (E)"
+                                        },
+                                        {
+                                            "name": "5",
+                                            "type": "text",
+                                            "label": "주요내용 (F)"
+                                        },
+                                        {
+                                            "name": "6",
+                                            "type": "text",
+                                            "label": "링크 (G)"
+                                        },
+                                        {
+                                            "name": "7",
+                                            "type": "text",
+                                            "label": "요약본 (H)"
+                                        },
+                                        {
+                                            "name": "8",
+                                            "type": "text",
+                                            "label": "기대효과 (I)"
+                                        },
+                                        {
+                                            "name": "9",
+                                            "type": "text",
+                                            "label": "게시글 (J)"
+                                        },
+                                        {
+                                            "name": "10",
+                                            "type": "text",
+                                            "label": "인덱스 (K)"
+                                        },
+                                        {
+                                            "name": "11",
+                                            "type": "text",
+                                            "label": "제목카드 (L)"
+                                        },
+                                        {
+                                            "name": "12",
+                                            "type": "text",
+                                            "label": "내용카드 (M)"
+                                        },
+                                        {
+                                            "name": "13",
+                                            "type": "text",
+                                            "label": "메일카드 (N)"
+                                        },
+                                        {
+                                            "name": "14",
+                                            "type": "text",
+                                            "label": "(O)"
+                                        },
+                                        {
+                                            "name": "15",
+                                            "type": "text",
+                                            "label": "(P)"
+                                        },
+                                        {
+                                            "name": "16",
+                                            "type": "text",
+                                            "label": "(Q)"
+                                        },
+                                        {
+                                            "name": "17",
+                                            "type": "text",
+                                            "label": "(R)"
+                                        },
+                                        {
+                                            "name": "18",
+                                            "type": "text",
+                                            "label": "(S)"
+                                        },
+                                        {
+                                            "name": "19",
+                                            "type": "text",
+                                            "label": "(T)"
+                                        },
+                                        {
+                                            "name": "20",
+                                            "type": "text",
+                                            "label": "(U)"
+                                        },
+                                        {
+                                            "name": "21",
+                                            "type": "text",
+                                            "label": "(V)"
+                                        },
+                                        {
+                                            "name": "22",
+                                            "type": "text",
+                                            "label": "(W)"
+                                        },
+                                        {
+                                            "name": "23",
+                                            "type": "text",
+                                            "label": "(X)"
+                                        },
+                                        {
+                                            "name": "24",
+                                            "type": "text",
+                                            "label": "(Y)"
+                                        },
+                                        {
+                                            "name": "25",
+                                            "type": "text",
+                                            "label": "(Z)"
+                                        }
+                                    ],
+                                    "type": "collection",
+                                    "label": "Values"
+                                }
+                            ]
+                        },
+                        "valueInputOption": {
+                            "mode": "chose",
+                            "label": "User entered"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google"
+                            },
+                            "label": "My Google connection (oheth9@gmail.com)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:google",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "mode",
+                        "type": "select",
+                        "label": "Search Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "select",
+                                "fromAll",
+                                "map"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "valueInputOption",
+                        "type": "select",
+                        "label": "Value input option",
+                        "validate": {
+                            "enum": [
+                                "USER_ENTERED",
+                                "RAW"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "type": "select",
+                        "label": "Drive",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "drive",
+                                "share",
+                                "team"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "spreadsheetId",
+                        "type": "file",
+                        "label": "Spreadsheet ID",
+                        "required": true
+                    },
+                    {
+                        "name": "sheetId",
+                        "type": "select",
+                        "label": "Sheet Name",
+                        "required": true
+                    },
+                    {
+                        "name": "rowNumber",
+                        "type": "uinteger",
+                        "label": "Row number",
+                        "required": true
+                    },
+                    {
+                        "name": "includesHeaders",
+                        "type": "select",
+                        "label": "Table contains headers",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                true,
+                                false
+                            ]
+                        }
+                    },
+                    {
+                        "name": "values",
+                        "spec": [
+                            {
+                                "name": "0",
+                                "type": "text",
+                                "label": "메일제목 (A)"
+                            },
+                            {
+                                "name": "1",
+                                "type": "text",
+                                "label": "수집일 (B)"
+                            },
+                            {
+                                "name": "2",
+                                "type": "text",
+                                "label": "제목 (C)"
+                            },
+                            {
+                                "name": "3",
+                                "type": "text",
+                                "label": "소관위 (D)"
+                            },
+                            {
+                                "name": "4",
+                                "type": "text",
+                                "label": "게시종료일 (E)"
+                            },
+                            {
+                                "name": "5",
+                                "type": "text",
+                                "label": "주요내용 (F)"
+                            },
+                            {
+                                "name": "6",
+                                "type": "text",
+                                "label": "링크 (G)"
+                            },
+                            {
+                                "name": "7",
+                                "type": "text",
+                                "label": "요약본 (H)"
+                            },
+                            {
+                                "name": "8",
+                                "type": "text",
+                                "label": "기대효과 (I)"
+                            },
+                            {
+                                "name": "9",
+                                "type": "text",
+                                "label": "게시글 (J)"
+                            },
+                            {
+                                "name": "10",
+                                "type": "text",
+                                "label": "인덱스 (K)"
+                            },
+                            {
+                                "name": "11",
+                                "type": "text",
+                                "label": "제목카드 (L)"
+                            },
+                            {
+                                "name": "12",
+                                "type": "text",
+                                "label": "내용카드 (M)"
+                            },
+                            {
+                                "name": "13",
+                                "type": "text",
+                                "label": "메일카드 (N)"
+                            },
+                            {
+                                "name": "14",
+                                "type": "text",
+                                "label": "(O)"
+                            },
+                            {
+                                "name": "15",
+                                "type": "text",
+                                "label": "(P)"
+                            },
+                            {
+                                "name": "16",
+                                "type": "text",
+                                "label": "(Q)"
+                            },
+                            {
+                                "name": "17",
+                                "type": "text",
+                                "label": "(R)"
+                            },
+                            {
+                                "name": "18",
+                                "type": "text",
+                                "label": "(S)"
+                            },
+                            {
+                                "name": "19",
+                                "type": "text",
+                                "label": "(T)"
+                            },
+                            {
+                                "name": "20",
+                                "type": "text",
+                                "label": "(U)"
+                            },
+                            {
+                                "name": "21",
+                                "type": "text",
+                                "label": "(V)"
+                            },
+                            {
+                                "name": "22",
+                                "type": "text",
+                                "label": "(W)"
+                            },
+                            {
+                                "name": "23",
+                                "type": "text",
+                                "label": "(X)"
+                            },
+                            {
+                                "name": "24",
+                                "type": "text",
+                                "label": "(Y)"
+                            },
+                            {
+                                "name": "25",
+                                "type": "text",
+                                "label": "(Z)"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Values"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 6,
+            "module": "google-slides:addDeleteASlide",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 4265114
+            },
+            "mapper": {
+                "slide": "{{2.objectId}}",
+                "select": "delete",
+                "select1": "map",
+                "presentation": "{{2.presentationId}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 736,
+                    "y": -27
+                },
+                "restore": {
+                    "expect": {
+                        "select": {
+                            "label": "Delete a slide"
+                        },
+                        "select1": {
+                            "label": "Enter manually"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google"
+                            },
+                            "label": "My Google connection (oheth9@gmail.com)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:google",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "select",
+                        "type": "select",
+                        "label": "Select the method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "add",
+                                "delete"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "select1",
+                        "type": "select",
+                        "label": "Enter a Slide ID",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "map",
+                                "list"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "presentation",
+                        "type": "text",
+                        "label": "Presentation ID",
+                        "required": true
+                    },
+                    {
+                        "name": "slide",
+                        "type": "text",
+                        "label": "Slide Object ID",
+                        "required": true
+                    }
+                ]
+            }
+        }
+    ],
+    "metadata": {
+        "instant": false,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us2.make.com",
+        "notes": []
+    }
+}
