@@ -25,7 +25,7 @@ yesterday_str_kor = f"{yesterday_date.month}월 {yesterday_date.day}일"
 mail_subject_date = f"[{today_str_mmdd}] {yesterday_dash} 입법예고 입법다람이"
 
 # STEP 1. API 데이터 수집 (게시시작일 어제만)
-API_KEY = "0e7398853c8b44c5bdb12c9726538bfc"
+API_KEY = "자신의 국회입법예고 API KEY"
 BASE_URL = "https://open.assembly.go.kr/portal/openapi/nknalejkafmvgzmpt"
 api_data = {}
 page = 1
