@@ -124,17 +124,26 @@ try:
                     committee = "(소관위 없음)"
 
                 try:
-                    period_text = driver.find_element(By.CSS_SELECTOR,
-                        '#content > div.board01.pr.td_center.board-added > table > tbody > tr > td:nth-child(6)').text.strip()
+                    # 게시기간 td가 로딩될 때까지 명시적으로 기다리기
+                    period_element = WebDriverWait(driver, 10).until(
+                        EC.presence_of_element_located((By.CSS_SELECTOR,
+                            '#content > div.board01.pr.td_center.board-added > table > tbody > tr > td:nth-child(6)'))
+                    )
+                    period_text = period_element.text.strip()
+                    print("📌 게시기간 텍스트:", period_text)
+                
                     noti_range = period_text.split("~")
                     noti_st_dt = noti_range[0].strip() if len(noti_range) >= 1 else ""
                     noti_ed_dt = noti_range[1].strip() if len(noti_range) >= 2 else ""
+                
                     if noti_st_dt != yesterday_dash:
                         print(f"⏩ 게시시작일({noti_st_dt}) ≠ 어제({yesterday_dash}) → 건너뜀")
                         driver.back()
                         time.sleep(1)
                         continue
-                except:
+                except Exception as e:
+                    print("❌ 게시기간 크롤링 실패:", e)
+                    noti_st_dt = ""
                     noti_ed_dt = ""
 
                 try:
