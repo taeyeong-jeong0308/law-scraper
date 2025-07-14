@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 # 날짜 변수 (어제 기준)
 # 📌 날짜 계산
 today_date = datetime.today()
-yesterday_date = today_date - timedelta(days=1)
+yesterday_date = today_date - timedelta(days=4)
 
 # 📌 문자열 포맷
 today_str_mmdd = f"{today_date.month}/{today_date.day}"
