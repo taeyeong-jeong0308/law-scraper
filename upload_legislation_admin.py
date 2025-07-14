@@ -13,7 +13,7 @@ import time
 
 # 📌 날짜 기준 (어제)
 today = datetime.today()
-yesterday = today - timedelta(days=1)
+yesterday = today - timedelta(days=4)
 
 # 날짜 문자열 변환
 today_str_mmdd = f"{today.month}/{today.day}"
