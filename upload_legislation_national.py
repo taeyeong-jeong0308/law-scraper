@@ -193,7 +193,7 @@ creds = ServiceAccountCredentials.from_json_keyfile_name("service_account.json",
 
 client = gspread.authorize(creds)
 
-sheet = client.open("화면꺼짐자동화_절대로_건들지말것").worksheet("입법부")
+sheet = client.open("최종입법데이터").worksheet("입법부")
 existing_data = sheet.get_all_values()
 header = existing_data[0]
 existing_rows = existing_data[1:]
