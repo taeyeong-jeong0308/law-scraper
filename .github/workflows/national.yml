@@ -2,7 +2,7 @@ name: Run upload_legislation_national.py daily
 
 on:
   schedule:
-    - cron: '0 14 * * *'  # 매일 오후 11:00 (KST 기준, UTC 14:00)
+    - cron: '45 0 * * *'  # 매일 오전 9:45 KST (UTC 기준 00:45)
   workflow_dispatch:
 
 jobs:
@@ -31,5 +31,3 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: service_account.json
         run: python upload_legislation_national.py
-
-
